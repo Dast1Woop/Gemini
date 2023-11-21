@@ -44,10 +44,10 @@ final class ScaleAnimationViewController: UIViewController {
 
         let layout = UICollectionViewPagingFlowLayout()
         layout.scrollDirection = scrollDirection
-        layout.itemSize = CGSize(width: view.bounds.width - 80, height: view.bounds.height - 400)
-        layout.sectionInset = UIEdgeInsets(top: 200, left: 40, bottom: 200, right: 40)
-        layout.minimumLineSpacing = 40
-        layout.minimumInteritemSpacing = 40
+        layout.itemSize = CGSize(width: view.bounds.width - 180, height: 120)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
         collectionView.collectionViewLayout = layout
         collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
     }
