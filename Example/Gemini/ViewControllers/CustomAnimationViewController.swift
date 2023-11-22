@@ -8,10 +8,17 @@ enum CustomAnimationType {
     fileprivate func layout(withParentView parentView: UIView) -> UICollectionViewFlowLayout {
         switch self {
         case .custom1:
+            let kSectionMargin = 60.0
             let layout = UICollectionViewPagingFlowLayout()
-            layout.itemSize = CGSize(width: parentView.bounds.width - 100, height: parentView.bounds.height - 200)
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 50)
-            layout.minimumLineSpacing = 10
+            layout.itemSize = CGSize(width: parentView.bounds.width - kSectionMargin*2, height: 150)
+            
+            //保证collectionV最左边和最右边间距都是 kSectionMargin，此时设置itemSize为俯视图宽-kSectionMargin*2（保证拖动cell居中时，cell左右边缘距离屏幕都是kSectionMargin），可以保证首个cell居中，后面cell水平间距通过minimumLineSpacing设置(必须<kSectionMargin 才能看到左右cell边缘)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: kSectionMargin, bottom: 0, right: kSectionMargin)
+            
+            /** For a horizontally scrolling grid, this value represents the minimum spacing between successive columns. This spacing is not applied to the space between the header and the first line or between the last line and the footer.
+             The default value of this property is 10.0.
+             */
+            layout.minimumLineSpacing = 20
             layout.scrollDirection = .horizontal
             return layout
 
@@ -68,11 +75,12 @@ final class CustomAnimationViewController: UIViewController {
             collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
             collectionView.gemini
                 .customAnimation()
-                .translation(x:0, y: 50, z:0)
-                .rotationAngle(x:0, y: 13, z:0)
+                .translation(x:0, y: 0, z:0)//y:当前cell在y坐标轴上比左右cell高出多少
+                .rotationAngle(x:0, y: 0, z:0)//y:当前cell在y坐标轴上旋转角度
+                .scale(x: 1, y: 0.9, z: 1)//y:当前cell在移到旁边时缩放比
                 .ease(.easeOutExpo)
                 .shadowEffect(.fadeIn)
-                .maxShadowAlpha(0.3)
+                .maxShadowAlpha(0.1)//y:当前cell在移到旁边时黑色遮罩的不透明度
 
         case .custom2:
             collectionView.collectionViewLayout = animationType.layout(withParentView: view)
@@ -129,5 +137,9 @@ extension CustomAnimationViewController: UICollectionViewDataSource {
 
         self.collectionView.animateCell(cell)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function, indexPath)
     }
 }

@@ -17,7 +17,8 @@ extension Resource {
     private var resourceNames: [String] {
         switch self {
         case .image:
-            return ["building", "food", "japan", "minions", "nature", "people"]
+//            return ["building", "food", "japan", "minions", "nature", "people"]
+            return ["1", "2", "3", "4", "5", "6"]
         case .movie:
             return ["https://yt-dash-mse-test.commondatastorage.googleapis.com/media/car-20120827-85.mp4",
                     "https://yt-dash-mse-test.commondatastorage.googleapis.com/media/motion-20120802-85.mp4",
